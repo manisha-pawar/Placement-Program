@@ -7,19 +7,17 @@ public class Main{
     public static void main(String[] args) {
         Scanner scn=new Scanner(System.in);
         int n=scn.nextInt();
+        int div=2;
         
-        for(int div=2;div * div <= n;div++) {
-            while(n % div == 0) {
-                n = n / div;
+        while(div * div <= n) {
+            if(n % div == 0) {
                 System.out.print(div+" ");
+                n = n/div;
+            }
+            else {
+            	div++;
             }
         }
-        
-        if(n == 1) {
-            //nothing to do
-        }
-        else {
-            System.out.println(n);
-        }
+        System.out.println(n);     
     }
 }
