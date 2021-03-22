@@ -21,7 +21,7 @@ public class Main {
         Node tail;
         int size;
 
-        void addLast(int val) {
+        public void addLast(int val) {
             Node n = new Node(val, null);
 
             if (size == 0) {
