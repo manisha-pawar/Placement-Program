@@ -50,6 +50,8 @@ public class Main {
         }
     }
 
+
+    //30-03-2021
     //preorder & postorder traversals
     public static void traversals(Node node) {
         //node pre
@@ -95,7 +97,7 @@ public class Main {
 
 
     //level-order linewise traversal
-    public static void levelOrderLinewise(Node node) {
+    public static void levelOrderLinewise1(Node node) {
         Queue < Node > mq = new ArrayDeque < > ();
         Queue < Node > cq = new ArrayDeque < > ();
 
@@ -196,6 +198,157 @@ public class Main {
             Node child = node.children.get(i);
             removeLeaves(child);
         }
+    }
+
+
+    //31-03-2021
+    //linearize - with getTail
+    public static void linearize(Node node) {
+        for (int i = 0; i < node.children.size(); i++) {
+            Node child = node.children.get(i);
+            linearize(child);
+        }
+
+        while (node.children.size() > 1) {
+            Node lc = node.children.get(node.children.size() - 1);
+            Node slc = node.children.get(node.children.size() - 2);
+
+            node.children.remove(node.children.size() - 1);
+
+            Node slct = getTail(slc);
+
+            slct.children.add(lc);
+        }
+    }
+
+    public static Node getTail(Node node) {
+        while (node.children.size() == 1) {
+            node = node.children.get(0);
+        }
+
+        return node;
+    }
+
+
+    //linearize - efficient
+    public static Node linearize2(Node node) {
+        if (node.children.size() == 0) {
+            return node;
+        }
+
+        Node olc = node.children.get(node.children.size() - 1);
+        Node ot = linearize2(olc);
+
+        while (node.children.size() > 1) {
+            Node lc = node.children.get(node.children.size() - 1);
+            Node slc = node.children.get(node.children.size() - 2);
+            Node slct = linearize2(slc);
+
+            node.children.remove(node.children.size() - 1);
+            slct.children.add(lc);
+        }
+
+        return ot;
+
+    }
+
+    //level-order linewise with delimiter approach
+    public static void levelOrderLinewise2(Node node) {
+        Queue < Node > q = new ArrayDeque < > ();
+
+        q.add(node);
+        Node spn = new Node();
+        spn.data = -1;
+        q.add(spn);
+
+
+        while (q.size() > 0) {
+            Node rem = q.remove();
+
+            if (rem.data != -1) {
+                System.out.print(rem.data + " ");
+
+                for (int i = 0; i < rem.children.size(); i++) {
+                    Node rch = rem.children.get(i);
+                    q.add(rch);
+                }
+            } else if (rem.data == -1 && q.size() > 0) {
+                System.out.println();
+                q.add(rem);
+            }
+        }
+
+    }
+
+    //level-order linewise with count of a level approach
+    public static void levelOrderLinewise3(Node node) {
+        Queue < Node > q = new ArrayDeque < > ();
+
+        q.add(node);
+
+        while (q.size() > 0) {
+            int s = q.size();
+
+            for (int i = 0; i < s; i++) {
+
+                Node rem = q.remove();
+                System.out.print(rem.data + " ");
+
+                for (int j = 0; j < rem.children.size(); j++) {
+                    Node rch = rem.children.get(j);
+                    q.add(rch);
+                }
+            }
+
+            System.out.println();
+        }
+
+    }
+
+
+    //find node in generic tree
+    public static boolean find(Node node, int data) {
+        if (node.data == data) {
+            return true;
+        }
+
+        for (int i = 0; i < node.children.size(); i++) {
+            Node child = node.children.get(i);
+
+            boolean fic = find(child, data); //found in child
+
+            if (fic == true) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
+    //node to root path
+    public static ArrayList < Integer > nodeToRootPath(Node node, int data) {
+        if (node.data == data) {
+            ArrayList < Integer > base = new ArrayList < > ();
+            base.add(data);
+            return base;
+        }
+
+        for (int i = 0; i < node.children.size(); i++) {
+            Node child = node.children.get(i);
+
+            ArrayList < Integer > n2cp = nodeToRootPath(child, data); //node to child path
+
+            if (n2cp.size() > 0) {
+                n2cp.add(node.data); //node to child path -> node to root path
+                return n2cp;
+            }
+        }
+
+        return new ArrayList < > ();
+
+
     }
 
     public static void main(String[] args) {
