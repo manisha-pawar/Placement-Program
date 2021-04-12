@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class construct {
+public class Main {
 
     public static class Node {
         int data;
@@ -93,11 +93,23 @@ public class construct {
         display(node.right);
     }
 
+    public static void traversal(Node node) {
+        if(node == null) {
+            return;
+        }
+
+        System.out.println(node.data + " pre");
+        traversal(node.left);
+        System.out.println(node.data + " in");
+        traversal(node.right);
+        System.out.println(node.data + " post");
+    }
+
     public static void main(String[]args) {
         Integer[]arr = {50,25,12,null,null,37,30,null,null,null,75,62,null,70,null,null,87,null,null};
 
         Node root = construct(arr);
 
-        display(root);
+        traversal(root);
     }
 }
