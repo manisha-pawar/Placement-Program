@@ -63,7 +63,7 @@ public class Solution {
                 continue;
             }
 
-            if(parent.containsKey(w1) == false || parent.containsKey(w2) == false || parent.get(w1) != parent.get(w2)) {
+            if(parent.containsKey(w1) == false || parent.containsKey(w2) == false || parent.get(w1).equals(parent.get(w2)) == false) {
                 return false;
             }
         }
