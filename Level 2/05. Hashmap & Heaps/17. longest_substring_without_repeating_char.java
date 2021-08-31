@@ -1,10 +1,8 @@
-import java.util.HashSet;
- import java.util.Scanner;
- import java.util.HashMap;
- 
- public class Main {
- 	 public static int lengthOfLongestSubstring(String s) {
- 	    HashMap<Character,Integer>map = new HashMap<>();
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character,Integer>map = new HashMap<>();
  	    
  	    int i = -1, j  = -1;
  	    int oans = 0;
@@ -12,13 +10,6 @@ import java.util.HashSet;
  	    while(i < s.length()-1) {
  	        //aquire
  	        while(i < s.length() - 1) {
- 	            //ans updation step
- 	            int len = i - j;
- 	            
- 	            if(len > oans) {
- 	                oans = len;
- 	            }
- 	            
  	            i++;
  	            char ch = s.charAt(i);
  	            
@@ -28,6 +19,14 @@ import java.util.HashSet;
  	            if(nf >= 2) {
  	                //invalid
  	                break;
+ 	            }
+ 	            else {
+ 	                //ans updation step
+     	            int len = i - j;
+     	            
+     	            if(len > oans) {
+     	                oans = len;
+     	            }
  	            }
  	        }
  	        
@@ -50,16 +49,5 @@ import java.util.HashSet;
  	    }
  	    
  	    return oans;
- 	 }
- 	 
- 	 
- 	 //Don't make any changes here.
- 	 public static void main(String[] args) {
- 
- 	 	 Scanner s = new Scanner(System.in);
- 	 	 String str = s.next();
- 	 	 System.out.println(lengthOfLongestSubstring(str));
- 
- 	 }
- 
- }
+    }
+}
